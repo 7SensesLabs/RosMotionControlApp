@@ -1,11 +1,7 @@
 var rbServer = null;
 
 // These lines create a topic object as defined by roslibjs
-var cmdVelTopic = new ROSLIB.Topic({
-    ros : rbServer,
-    name : '/turtle1/cmd_vel',
-    messageType : 'geometry_msgs/Twist'
-});
+var cmdVelTopic = null;
 
 // These lines create a message that conforms to the structure of the Twist defined in our ROS installation
 // It initalizes all properties to zero. They will be set to appropriate values before we publish this message.

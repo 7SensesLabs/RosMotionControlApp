@@ -18,7 +18,8 @@ var twist = new ROSLIB.Message({
     }
 });
 
-window.addEventListener('keyup', keyDownHandler);
+var turtle = document.getElementById('turtle');
+turtle.addEventListener('keyup', keyDownHandler);
 
 function createWebSocket(){
     //if there exists one socket connection open
@@ -138,11 +139,11 @@ function keyDownHandler(event)
 
     if (keyPressed == LEFT)
     {
-        angularX = 0.1;
+        angularX = 0.5;
     }
     else if (keyPressed == RIGHT)
     {
-        angularX = -0.1;
+        angularX = -0.5;
     }
     else if (keyPressed == UP)
     {
@@ -150,7 +151,7 @@ function keyDownHandler(event)
     }
     else if (keyPressed == DOWN)
     {
-        linearX = 0.1;
+        linearX = -0.1;
     }
 
     // Set the appropriate values on the message object

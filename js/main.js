@@ -55,7 +55,7 @@ function createWebSocket(){
     });
 
 // These lines create a topic object as defined by roslibjs
-    var cmdVelTopic = new ROSLIB.Topic({
+    cmdVelTopic = new ROSLIB.Topic({
         ros : rbServer,
         name : '/turtle1/cmd_vel',
         messageType : 'geometry_msgs/Twist'

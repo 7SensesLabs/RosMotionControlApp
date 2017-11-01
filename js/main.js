@@ -56,6 +56,38 @@ window.addEventListener('keyup', keyDownHandler);
  */
 function pubMessage() {
 
+    /**
+     Set the appropriate values on the twist message object according to values in text boxes
+     It seems that turtlesim only uses the x property of the linear object
+     and the z property of the angular object
+     **/
+    var linearX = 0.0;
+    var linearY = 0.0;
+    var linearZ = 0.0;
+    var angularX = 0.0;
+    var angularY = 0.0;
+    var angularZ = 0.0;
+
+
+    // get values from text input fields. Note for simplicity we are not validating.
+    linearX = 0 + Number(document.getElementById('linearXText').value);
+    linearY = 0 + Number(document.getElementById('linearYText').value);
+    linearZ = 0 + Number(document.getElementById('linearZText').value);
+
+    angularX = 0 + Number(document.getElementById('angularXText').value);
+    angularY = 0 + Number(document.getElementById('angularYText').value);
+    angularZ = 0 + Number(document.getElementById('angularZText').value);
+
+    // Set the appropriate values on the message object
+    twist.linear.x = linearX;
+    twist.linear.y = linearY;
+    twist.linear.z = linearZ;
+
+    twist.angular.x = angularX;
+    twist.angular.y = angularY;
+    twist.angular.z = angularZ;
+
+
     // Publish the message
     cmdVelTopic.publish(twist);
 }
@@ -117,5 +149,6 @@ function keyDownHandler(event)
     twist.angular.y = angularY;
     twist.angular.z = angularZ;
 
-    pubMessage();
+    // Publish the message
+    cmdVelTopic.publish(twist);
 }

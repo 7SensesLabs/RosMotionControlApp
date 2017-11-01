@@ -139,11 +139,11 @@ function keyDownHandler(event)
 
     if (keyPressed == LEFT)
     {
-        angularX = 0.5;
+        angularZ = 0.5;
     }
     else if (keyPressed == RIGHT)
     {
-        angularX = -0.5;
+        angularZ = -0.5;
     }
     else if (keyPressed == UP)
     {

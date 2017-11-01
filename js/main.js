@@ -18,8 +18,8 @@ var twist = new ROSLIB.Message({
     }
 });
 
-var turtle = document.getElementById('turtle');
-turtle.addEventListener('keyup', keyDownHandler);
+
+window.addEventListener('keyup', keyDownHandler);
 
 function createWebSocket(){
     //if there exists one socket connection open

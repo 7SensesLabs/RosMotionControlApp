@@ -62,7 +62,7 @@ function pubMessage() {
 
 function keyDownHandler(event)
 {
-    var keyPressed = String.fromCharCode(event.keyCode);
+    var keyPressed = event.keyCode;
     var LEFT = 37;
     var UP = 38;
     var RIGHT = 39;

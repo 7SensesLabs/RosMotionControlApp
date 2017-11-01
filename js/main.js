@@ -39,6 +39,9 @@ function createWebSocket(){
         // Write appropriate message to #feedback div when successfully connected to rosbridge
         var fbDiv = document.getElementById('feedback');
         fbDiv.innerHTML += "<p>Connected to websocket server.</p>";
+
+        var connectBtn = document.getElementById('connect');
+        connectBtn.className = 'btn btn-success';
     });
 
 // This function is called when there is an error attempting to connect to rosbridge
@@ -46,6 +49,8 @@ function createWebSocket(){
         // Write appropriate message to #feedback div upon error when attempting to connect to rosbridge
         var fbDiv = document.getElementById('feedback');
         fbDiv.innerHTML = "<p>Error connecting to websocket server.</p>";
+        var connectBtn = document.getElementById('connect');
+        connectBtn.className = 'btn btn-warning';
     });
 
 // This function is called when the connection to rosbridge is closed

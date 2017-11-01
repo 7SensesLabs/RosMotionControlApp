@@ -47,7 +47,7 @@ var twist = new ROSLIB.Message({
     }
 });
 
-rbServer.connec
+window.addEventListener('keyup', keyDownHandler);
 
 /* This function:
  - retrieves numeric values from the text boxes
@@ -55,6 +55,19 @@ rbServer.connec
  - publishes the message to the cmd_vel topic.
  */
 function pubMessage() {
+
+    // Publish the message
+    cmdVelTopic.publish(twist);
+}
+
+function keyDownHandler(event)
+{
+    var keyPressed = String.fromCharCode(event.keyCode);
+    var LEFT = 37;
+    var UP = 38;
+    var RIGHT = 39;
+    var DOWN = 40;
+
     /**
      Set the appropriate values on the twist message object according to values in text boxes
      It seems that turtlesim only uses the x property of the linear object
@@ -77,6 +90,24 @@ function pubMessage() {
     angularY = 0 + Number(document.getElementById('angularYText').value);
     angularZ = 0 + Number(document.getElementById('angularZText').value);
 
+
+    if (keyPressed == LEFT)
+    {
+        angularX = 0.1;
+    }
+    else if (keyPressed == RIGHT)
+    {
+        angularX = -0.1;
+    }
+    else if (keyPressed == UP)
+    {
+        linearX = 0.1;
+    }
+    else if (keyPressed == DOWN)
+    {
+        linearX = 0.1;
+    }
+
     // Set the appropriate values on the message object
     twist.linear.x = linearX;
     twist.linear.y = linearY;
@@ -86,6 +117,5 @@ function pubMessage() {
     twist.angular.y = angularY;
     twist.angular.z = angularZ;
 
-    // Publish the message
-    cmdVelTopic.publish(twist);
+    pubMessage();
 }

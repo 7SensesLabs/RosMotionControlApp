@@ -1,7 +1,7 @@
 
 // This function connects to the rosbridge server running on the local computer on port 9090
 var rbServer = new ROSLIB.Ros({
-    url : 'ws://10.42.0.1:9090'
+    url : 'ws://127.0.0.1:9090'
 });
 
 // This function is called upon the rosbridge connection event

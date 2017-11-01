@@ -22,7 +22,7 @@ window.addEventListener('keyup', keyDownHandler);
 
 function createWebSocket(){
     //if there exists one socket connection open
-    if(rbServer && rbServer.readyState == 1){
+    if(rbServer!== null){
         rbServer.close();
     }
 

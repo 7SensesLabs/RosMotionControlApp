@@ -68,6 +68,12 @@ function createWebSocket(){
     });
 }
 
+function disconnect(){
+    if(rbServer){
+        rbServer.close()
+    }
+}
+
 /* This function:
  - retrieves numeric values from the text boxes
  - assigns these values to the appropriate values in the twist message

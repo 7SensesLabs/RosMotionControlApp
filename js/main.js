@@ -139,13 +139,13 @@ function keyDownHandler(event)
 
 
     // get values from text input fields. Note for simplicity we are not validating.
-    linearX = 0 + Number(document.getElementById('linearXText').value);
-    linearY = 0 + Number(document.getElementById('linearYText').value);
-    linearZ = 0 + Number(document.getElementById('linearZText').value);
+    linearX = 0 ;
+    linearY = 0 ;
+    linearZ = 0 ;
 
-    angularX = 0 + Number(document.getElementById('angularXText').value);
-    angularY = 0 + Number(document.getElementById('angularYText').value);
-    angularZ = 0 + Number(document.getElementById('angularZText').value);
+    angularX = 0 ;
+    angularY = 0 ;
+    angularZ = 0 ;
 
 
     if (keyPressed == LEFT)

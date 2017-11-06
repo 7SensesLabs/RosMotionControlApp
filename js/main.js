@@ -71,6 +71,8 @@ function createWebSocket(){
 function disconnect(){
     if(rbServer){
         rbServer.close()
+        var connectBtn = document.getElementById('connect');
+        connectBtn.className = 'btn btn-warning';
     }
 }
 

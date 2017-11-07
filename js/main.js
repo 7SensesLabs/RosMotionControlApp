@@ -140,7 +140,19 @@ function keyDownHandler(event)
 function loadTopicItems(){
     if(rbServer){
         rbServer.getTopics(function(data){
+            //the data is an array object
             console.log(data);
+            var optionStringArray = [];
+            data.forEach(function(topicName){
+                $('.selectpicker').append($('<option>', {
+                    value: topicName,
+                    text : topicName
+                }));
+            });
+            $('.selectpicker').selectpicker({
+                style: 'btn-info',
+                size: 4
+            });
         }, function(error){
             console.error(error);
         });
@@ -165,4 +177,7 @@ $(document).ready(function(){
             console.log('none of the panels is clicked...' );
         }
     });
+
+
+
 });

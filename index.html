@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
@@ -77,8 +78,21 @@
                     </div>
                 </div>
                 <div id="topic" class="tab-pane fade">
-                    <h3>Menu 1</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-6" style="margin-top: 1em;">
+                                <select id="topicSelect" class="selectpicker" multiple title="Choose topic from ROS...">
+                                    <option>Mustard</option>
+                                    <option>Ketchup</option>
+                                    <option>Relish</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6" style="margin-top: 1em;">
+                                <h4>Topic Type</h4>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="service" class="tab-pane fade">
                     <h3>Menu 2</h3>
@@ -94,6 +108,7 @@
         </section>
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
         <script type="text/javascript" src="js/eventemitter2.min.js"></script>
         <script type="text/javascript" src="js/roslib.js"></script>
         <script type="text/javascript" src="js/main.js"></script>

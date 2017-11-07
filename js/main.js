@@ -157,7 +157,7 @@ function loadRosTopicItems(){
     });
 }
 
-function onRosTopicItemClick(){
+function onRosTopicItemClick(e){
     var selected = $(this).find("option:selected").val();
     //load topic by type
     rbServer.getTopicsForType(selected, function(data){
@@ -173,6 +173,11 @@ $(document).ready(function(){
         createWebSocket();
         loadRosTopicItems();
     });
+
+    $('#disconnect').click(function(){
+        disconnect();
+    });
+
     $(".nav-tabs a").click(function(){
         console.dir(this);
         $(this).tab('show');

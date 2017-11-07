@@ -66,6 +66,8 @@ function createWebSocket(){
         name : '/turtle1/cmd_vel',
         messageType : 'geometry_msgs/Twist'
     });
+
+    loadRosTopicItems();
 }
 
 function disconnect(){
@@ -141,7 +143,6 @@ function loadRosTopicItems(){
     rbServer.getTopics(function(data){
         //the data is an array object
         var optionStringArray = [];
-        data = ['A','B','C']
         data.forEach(function(topicName){
             $('.selectpicker').append($('<option>', {
                 value: topicName,
@@ -168,26 +169,14 @@ function onRosTopicItemClick(){
 
 
 $(document).ready(function(){
+    $("#connect").click(function(e){
+        createWebSocket();
+        loadRosTopicItems();
+    });
     $(".nav-tabs a").click(function(){
         console.dir(this);
         $(this).tab('show');
-        // var id = $(this).attr('href').substr(1);
-        // if(id==='home'){
-        //     console.log('the panel of home is clicked...' );
-        // }else if(id==='topic'){
-        //     console.log('the panel of topic is clicked...' );
-        // }else if(id==='service'){
-        //     console.log('the panel of service is clicked...' );
-        // }else if(id='action'){
-        //     console.log('the panel of action is clicked...' );
-        // }else{
-        //     console.log('none of the panels is clicked...' );
-        // }
-        if(rbServer){
-            loadRosTopicItems();
-        }
+        var id = $(this).attr('href').substr(1);
+        console.log(id);
     });
-
-
-
 });

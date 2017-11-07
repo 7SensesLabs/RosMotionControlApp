@@ -137,24 +137,33 @@ function keyDownHandler(event)
     cmdVelTopic.publish(twist);
 }
 
-function loadTopicItems(){
-    if(rbServer){
-        rbServer.getTopics(function(data){
-            //the data is an array object
-            console.log(data);
-            var optionStringArray = [];
-            data.forEach(function(topicName){
-                $('.selectpicker').append($('<option>', {
-                    value: topicName,
-                    text : topicName
-                }));
-            });
-            $('.selectpicker').selectpicker('refresh');
-            $('.selectpicker').selectpicker('render');
-        }, function(error){
-            console.error(error);
+function loadRosTopicItems(){
+    rbServer.getTopics(function(data){
+        //the data is an array object
+        var optionStringArray = [];
+        data = ['A','B','C']
+        data.forEach(function(topicName){
+            $('.selectpicker').append($('<option>', {
+                value: topicName,
+                text : topicName
+            }));
         });
-    }
+        $('.selectpicker').selectpicker('refresh');
+        $('.selectpicker').selectpicker('render');
+        $('.selectpicker').on('change', onRosTopicItemClick);
+    }, function(error){
+        console.error(error);
+    });
+}
+
+function onRosTopicItemClick(){
+    var selected = $(this).find("option:selected").val();
+    //load topic by type
+    rbServer.getTopicsForType(selected, function(data){
+        console.log(data);
+    }, function(error){
+        console.error(error);
+    })
 }
 
 
@@ -162,17 +171,20 @@ $(document).ready(function(){
     $(".nav-tabs a").click(function(){
         console.dir(this);
         $(this).tab('show');
-        var id = $(this).attr('href').substr(1);
-        if(id==='home'){
-            console.log('the panel of home is clicked...' );
-        }else if(id==='topic'){
-            console.log('the panel of topic is clicked...' );
-        }else if(id==='service'){
-            console.log('the panel of service is clicked...' );
-        }else if(id='action'){
-            console.log('the panel of action is clicked...' );
-        }else{
-            console.log('none of the panels is clicked...' );
+        // var id = $(this).attr('href').substr(1);
+        // if(id==='home'){
+        //     console.log('the panel of home is clicked...' );
+        // }else if(id==='topic'){
+        //     console.log('the panel of topic is clicked...' );
+        // }else if(id==='service'){
+        //     console.log('the panel of service is clicked...' );
+        // }else if(id='action'){
+        //     console.log('the panel of action is clicked...' );
+        // }else{
+        //     console.log('none of the panels is clicked...' );
+        // }
+        if(rbServer){
+            loadRosTopicItems();
         }
     });
 

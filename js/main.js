@@ -149,10 +149,8 @@ function loadTopicItems(){
                     text : topicName
                 }));
             });
-            $('.selectpicker').selectpicker({
-                style: 'btn-info',
-                size: 4
-            });
+            $('.selectpicker').selectpicker('refresh');
+            $('.selectpicker').selectpicker('render');
         }, function(error){
             console.error(error);
         });

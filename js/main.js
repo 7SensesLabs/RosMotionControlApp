@@ -38,7 +38,7 @@ function createWebSocket(){
     rbServer.on('connection', function() {
         // Write appropriate message to #feedback div when successfully connected to rosbridge
         var fbDiv = document.getElementById('feedback');
-        fbDiv.innerHTML += "<p>Connected to websocket server.</p>";
+        fbDiv.innerHTML = "<p>Connected to websocket server.</p>";
 
         var connectBtn = document.getElementById('connect');
         connectBtn.className = 'btn btn-success';
@@ -74,49 +74,6 @@ function disconnect(){
         var connectBtn = document.getElementById('connect');
         connectBtn.className = 'btn btn-warning';
     }
-}
-
-/* This function:
- - retrieves numeric values from the text boxes
- - assigns these values to the appropriate values in the twist message
- - publishes the message to the cmd_vel topic.
- */
-function pubMessage() {
-
-    /**
-     Set the appropriate values on the twist message object according to values in text boxes
-     It seems that turtlesim only uses the x property of the linear object
-     and the z property of the angular object
-     **/
-    var linearX = 0.0;
-    var linearY = 0.0;
-    var linearZ = 0.0;
-    var angularX = 0.0;
-    var angularY = 0.0;
-    var angularZ = 0.0;
-
-
-    // get values from text input fields. Note for simplicity we are not validating.
-    linearX = 0 ;
-    linearY = 0 ;
-    linearZ = 0 ;
-
-    angularX = 0 ;
-    angularY = 0 ;
-    angularZ = 0 ;
-
-    // Set the appropriate values on the message object
-    twist.linear.x = linearX;
-    twist.linear.y = linearY;
-    twist.linear.z = linearZ;
-
-    twist.angular.x = angularX;
-    twist.angular.y = angularY;
-    twist.angular.z = angularZ;
-
-
-    // Publish the message
-    cmdVelTopic.publish(twist);
 }
 
 function keyDownHandler(event)
@@ -179,3 +136,33 @@ function keyDownHandler(event)
     // Publish the message
     cmdVelTopic.publish(twist);
 }
+
+function loadTopicItems(){
+    if(rbServer){
+        rbServer.getTopics(function(data){
+            console.log(data);
+        }, function(error){
+            console.error(error);
+        });
+    }
+}
+
+
+$(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+        console.dir(this);
+        $(this).tab('show');
+        var id = $(this).attr('href').substr(1);
+        if(id==='home'){
+            console.log('the panel of home is clicked...' );
+        }else if(id==='topic'){
+            console.log('the panel of topic is clicked...' );
+        }else if(id==='service'){
+            console.log('the panel of service is clicked...' );
+        }else if(id='action'){
+            console.log('the panel of action is clicked...' );
+        }else{
+            console.log('none of the panels is clicked...' );
+        }
+    });
+});

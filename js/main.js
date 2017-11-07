@@ -3,6 +3,8 @@ var rbServer = null;
 // These lines create a topic object as defined by roslibjs
 var cmdVelTopic = null;
 
+var poseTopic = null;
+
 // These lines create a message that conforms to the structure of the Twist defined in our ROS installation
 // It initalizes all properties to zero. They will be set to appropriate values before we publish this message.
 var twist = new ROSLIB.Message({
@@ -67,7 +69,6 @@ function createWebSocket(){
         messageType : 'geometry_msgs/Twist'
     });
 
-    loadRosTopicItems();
 }
 
 function disconnect(){
@@ -139,6 +140,19 @@ function keyDownHandler(event)
     cmdVelTopic.publish(twist);
 }
 
+function registerPoseTopic(){
+// These lines create a topic object as defined by roslibjs
+    poseTopic = new ROSLIB.Topic({
+        ros : rbServer,
+        name : '/turtle1/pose',
+        messageType : 'turtlesim/Pose'
+    });
+
+    poseTopic.subscribe(function(data){
+        console.log(data);
+    })
+}
+
 function loadRosTopicItems(){
     rbServer.getTopics(function(data){
         //the data is an array object
@@ -171,7 +185,8 @@ function onRosTopicItemClick(e){
 $(document).ready(function(){
     $("#connect").click(function(e){
         createWebSocket();
-        loadRosTopicItems();
+        // loadRosTopicItems();
+        registerPoseTopic();
     });
 
     $('#disconnect').click(function(){

@@ -1,3 +1,3 @@
 # RosMotionControlApp
 
-    bower install jquery bootstrap bootstrap-select
+    bower install jquery bootstrap

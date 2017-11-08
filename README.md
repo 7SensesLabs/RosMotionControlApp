@@ -1,3 +1,3 @@
 # RosMotionControlApp
 
-    bower install jquery bootstrap
+    bower install jquery bootstrap bootstrap-toggle

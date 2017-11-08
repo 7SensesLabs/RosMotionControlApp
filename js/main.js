@@ -157,23 +157,42 @@ function registerPoseTopic(){
     })
 }
 
-function createDigitWriteService(){
+function writeDigit2Pin(pin, value){
+
     var digitWriteClient = new ROSLIB.Service({
-            ros : rbServer,
-            name : '/arduino/digital_write',
-            serviceType : 'ros_arduino_msgs/DigitalWrite'
+        ros : rbServer,
+        name : '/arduino/digital_write',
+        serviceType : 'ros_arduino_msgs/DigitalWrite'
+    });
+
+    var request2 = new ROSLIB.ServiceRequest({
+        pin : pin,
+        value: value
+    });
+
+    digitWriteClient.callService(request2, function(result) {
+        console.log('Result for service call on '
+            + digitWriteClient.name + ':');
+        console.dir(result);
+    });
+}
+
+function queryStatusOfPin(pin){
+    var digitReadClient = new ROSLIB.Service({
+        ros : rbServer,
+        name : '/arduino/digital_read',
+        serviceType : 'ros_arduino_msgs/DigitalRead'
     });
 
     var request = new ROSLIB.ServiceRequest({
-            pin : 13,
-            value : 1
+        pin : pin
     });
 
-    digitWriteClient.callService(request, function(result) {
-            console.log('Result for service call on '
-            + digitWriteClient.name
-            + ': '
-            + result.sum);
+    digitReadClient.callService(request, function(result) {
+        console.log('Result for service call on '
+            + digitReadClient.name + ':');
+        console.dir(result.value);
+        $('#pinStatusText').html("The latest status of the pin value is: " + result.value);
     });
 }
 
@@ -223,5 +242,16 @@ $(document).ready(function(){
         $(this).tab('show');
         var id = $(this).attr('href').substr(1);
         console.log(id);
+    });
+
+    $('#status').bootstrapToggle();
+    $('#status').change(function(event) {
+        var value = $(this).prop('checked');// true | false
+        console.log(value);
+
+        var pin = $('#pinnum').val();
+        console.log(pin);
+        writeDigit2Pin(pin, value);
+        queryStatusOfPin(pin);
     });
 });

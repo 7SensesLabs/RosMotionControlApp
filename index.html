@@ -16,6 +16,24 @@
         <link rel="stylesheet" href="bower_components/bootstrap-select/dist/css/bootstrap-select.min.css">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even){background-color: #f2f2f2}
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <section class="container">
@@ -39,8 +57,29 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                            <div class="col-xs-12 col-sm-6">
                                 <img id="turtle" src="img/turtle.jpeg" class="img-responsive center-block">
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <table style="width:100%">
+                                    <tbody>
+                                    <tr>
+                                        <td>X</td><td>data.x</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Y</td><td>data.y</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Linear Velocity</td><td>data.linear_velocity</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Angular Velocity</td><td>data.angular_velocity</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Theta</td><td>data.theta</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div class="row">

@@ -149,7 +149,11 @@ function registerPoseTopic(){
     });
 
     poseTopic.subscribe(function(data){
-        console.log(data);
+        $('table tr').eq(1).find('td').eq(1).html(data.x);
+        $('table tr').eq(2).find('td').eq(1).html(data.y);
+        $('table tr').eq(3).find('td').eq(1).html(data.linear_velocity);
+        $('table tr').eq(4).find('td').eq(1).html(data.angular_velocity);
+        $('table tr').eq(5).find('td').eq(1).html(data.theta);
     })
 }
 

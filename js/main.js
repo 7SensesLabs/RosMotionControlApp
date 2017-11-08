@@ -191,11 +191,50 @@ function queryStatusOfPin(pin){
     digitReadClient.callService(request, function(result) {
         console.log('Result for service call on '
             + digitReadClient.name + ':');
-        console.dir(result.value);
-        $('#pinStatusText').html("The latest status of the pin value is: " + result.value);
+        var pinValue = result.value;
+        if(pinValue){
+            $('#status').bootstrapToggle('on')
+        }else{
+            $('#status').bootstrapToggle('off')
+        }
+        $('#pinStatusText').html("The latest status of the pin value is: " + pinValue);
     });
 }
 
+function initUIComponents(){
+
+    $(".nav-tabs a").click(function(){
+        console.dir(this);
+        $(this).tab('show');
+        var id = $(this).attr('href').substr(1);
+        console.log(id);
+    });
+
+    $("#connect").click(function(e){
+        createWebSocket();
+        // loadRosTopicItems();
+        registerPoseTopic();
+    });
+
+    $('#disconnect').click(function(){
+        disconnect();
+    });
+
+    $('#status').bootstrapToggle();
+    $('#status').change(function(event) {
+        var value = $(this).prop('checked');// true | false
+        console.log(value);
+
+        var pin = $('#pinnum').val();
+        writeDigit2Pin(parseInt(pin), value);
+        queryStatusOfPin(parseInt(pin));
+    });
+}
+
+function initPinValue(){
+    var pin = $('#pinnum').val();
+    queryStatusOfPin(parseInt(pin));
+}
 
 function loadRosTopicItems(){
     rbServer.getTopics(function(data){
@@ -227,31 +266,9 @@ function onRosTopicItemClick(e){
 
 
 $(document).ready(function(){
-    $("#connect").click(function(e){
-        createWebSocket();
-        // loadRosTopicItems();
-        registerPoseTopic();
-    });
 
-    $('#disconnect').click(function(){
-        disconnect();
-    });
 
-    $(".nav-tabs a").click(function(){
-        console.dir(this);
-        $(this).tab('show');
-        var id = $(this).attr('href').substr(1);
-        console.log(id);
-    });
+    initUIComponents();
+    initPinValue();
 
-    $('#status').bootstrapToggle();
-    $('#status').change(function(event) {
-        var value = $(this).prop('checked');// true | false
-        console.log(value);
-
-        var pin = $('#pinnum').val();
-        console.log(pin);
-        writeDigit2Pin(parseInt(pin), value);
-        queryStatusOfPin(parseInt(pin));
-    });
 });

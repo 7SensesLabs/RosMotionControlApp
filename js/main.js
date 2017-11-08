@@ -221,7 +221,7 @@ function initUIComponents(){
     });
 
     $('#status').bootstrapToggle();
-    $('#status').change(function(event) {
+    $('#status').click(function(event) {
         var value = $(this).prop('checked');// true | false
         console.log(value);
 
@@ -266,7 +266,6 @@ function onRosTopicItemClick(e){
 
 
 $(document).ready(function(){
-
 
     initUIComponents();
     initPinValue();

@@ -165,7 +165,7 @@ function createDigitWriteService(){
     });
 
     var request = new ROSLIB.ServiceRequest({
-            pin : 1,
+            pin : 13,
             value : 2
     });
 

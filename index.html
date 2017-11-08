@@ -17,6 +17,25 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <style>
+
+            /*
+                Align the height of all columns in one row
+            */
+            .row {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display:         flex;
+                flex-wrap: wrap;
+            }
+            .row > [class*='col-'] {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /*
+                Change the style of the data table
+            */
             table {
                 border-collapse: collapse;
                 width: 100%;
@@ -30,7 +49,7 @@
             tr:nth-child(even){background-color: #f2f2f2}
 
             th {
-                background-color: #4CAF50;
+                background-color: #5bc0de;
                 color: white;
             }
         </style>
@@ -57,11 +76,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6">
+                            <div class="col-xs-12 col-sm-6 panel">
                                 <img id="turtle" src="img/turtle.jpeg" class="img-responsive center-block">
                             </div>
-                            <div class="col-xs-12 col-sm-6">
+                            <div class="col-xs-12 col-sm-6 panel">
                                 <table style="width:100%">
+                                    <thead>
+                                    <tr><th>Property</th><th>Value</th></tr>
+                                    </thead>
                                     <tbody>
                                     <tr>
                                         <td>X</td><td> - </td>

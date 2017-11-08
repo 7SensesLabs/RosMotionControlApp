@@ -192,11 +192,11 @@ function queryStatusOfPin(pin){
         console.log('Result for service call on '
             + digitReadClient.name + ':');
         var pinValue = result.value;
-        if(pinValue){
-            $('#status').bootstrapToggle('on')
-        }else{
-            $('#status').bootstrapToggle('off')
-        }
+        // if(pinValue){
+        //     $('#status').bootstrapToggle('on')
+        // }else{
+        //     $('#status').bootstrapToggle('off')
+        // }
         $('#pinStatusText').html("The latest status of the pin value is: " + pinValue);
     });
 }
@@ -222,7 +222,8 @@ function initUIComponents(){
     });
 
     $('#status').bootstrapToggle();
-    $('#status').click(function(event) {
+
+    $('#status').change(function(event) {
         var value = $(this).prop('checked');// true | false
         console.log(value);
 

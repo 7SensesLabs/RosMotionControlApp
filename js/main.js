@@ -251,7 +251,7 @@ $(document).ready(function(){
 
         var pin = $('#pinnum').val();
         console.log(pin);
-        writeDigit2Pin(pin, value);
-        queryStatusOfPin(pin);
+        writeDigit2Pin(parseInt(pin), value);
+        queryStatusOfPin(parseInt(pin));
     });
 });

@@ -157,6 +157,27 @@ function registerPoseTopic(){
     })
 }
 
+function createDigitWriteService(){
+    var digitWriteClient = new ROSLIB.Service({
+            ros : ros,
+            name : '/digital_write',
+            serviceType : '/arduino/digital_write'
+    });
+
+    var request = new ROSLIB.ServiceRequest({
+            pin : 1,
+            value : 2
+    });
+
+    digitWriteClient.callService(request, function(result) {
+            console.log('Result for service call on '
+            + digitWriteClient.name
+            + ': '
+            + result.sum);
+    });
+}
+
+
 function loadRosTopicItems(){
     rbServer.getTopics(function(data){
         //the data is an array object

@@ -159,7 +159,7 @@ function registerPoseTopic(){
 
 function createDigitWriteService(){
     var digitWriteClient = new ROSLIB.Service({
-            ros : ros,
+            ros : rbServer,
             name : '/digital_write',
             serviceType : '/arduino/digital_write'
     });

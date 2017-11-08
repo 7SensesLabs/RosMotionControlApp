@@ -214,6 +214,7 @@ function initUIComponents(){
         createWebSocket();
         // loadRosTopicItems();
         registerPoseTopic();
+        initPinValue();
     });
 
     $('#disconnect').click(function(){
@@ -268,6 +269,4 @@ function onRosTopicItemClick(e){
 $(document).ready(function(){
 
     initUIComponents();
-    initPinValue();
-
 });

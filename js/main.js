@@ -166,7 +166,7 @@ function createDigitWriteService(){
 
     var request = new ROSLIB.ServiceRequest({
             pin : 13,
-            value : 2
+            value : 1
     });
 
     digitWriteClient.callService(request, function(result) {

@@ -20,9 +20,6 @@ var twist = new ROSLIB.Message({
     }
 });
 
-
-window.addEventListener('keyup', keyDownHandler);
-
 function createWebSocket(){
     //if there exists one socket connection open
     if(rbServer!== null){
@@ -86,61 +83,37 @@ function disconnect(){
     }
 }
 
-function keyDownHandler(event)
+function movementHandler(direction)
 {
-    var keyPressed = event.keyCode;
-    var LEFT = 37;
-    var UP = 38;
-    var RIGHT = 39;
-    var DOWN = 40;
-
     /**
      Set the appropriate values on the twist message object according to values in text boxes
      It seems that turtlesim only uses the x property of the linear object
      and the z property of the angular object
      **/
-    var linearX = 0.0;
-    var linearY = 0.0;
-    var linearZ = 0.0;
-    var angularX = 0.0;
-    var angularY = 0.0;
-    var angularZ = 0.0;
-
 
     // get values from text input fields. Note for simplicity we are not validating.
-    linearX = 0 ;
-    linearY = 0 ;
-    linearZ = 0 ;
+    var linearX = 0.0;
+    var angularZ = 0.0;
 
-    angularX = 0 ;
-    angularY = 0 ;
-    angularZ = 0 ;
-
-
-    if (keyPressed == LEFT)
+    if (direction == 'left')
     {
         angularZ = 0.5;
     }
-    else if (keyPressed == RIGHT)
+    else if (direction == 'right')
     {
         angularZ = -0.5;
     }
-    else if (keyPressed == UP)
+    else if (direction == 'forward')
     {
         linearX = 0.1;
     }
-    else if (keyPressed == DOWN)
+    else if (direction == 'back')
     {
         linearX = -0.1;
     }
 
     // Set the appropriate values on the message object
     twist.linear.x = linearX;
-    twist.linear.y = linearY;
-    twist.linear.z = linearZ;
-
-    twist.angular.x = angularX;
-    twist.angular.y = angularY;
     twist.angular.z = angularZ;
 
     // Publish the message
@@ -209,6 +182,13 @@ function queryStatusOfPin(pin){
 }
 
 function initUIComponents(){
+
+    $('button.direction').click(function(e){
+        var jqBtnObj = $(this);
+        var direction = jqBtnObj.attr('name');
+        console.log(direction);
+        movementHandler(direction)
+    });
 
     $(".nav-tabs a").click(function(){
         console.dir(this);

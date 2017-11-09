@@ -73,7 +73,14 @@ function createWebSocket(){
 
 function disconnect(){
     if(rbServer){
-        rbServer.close()
+        rbServer.close();
+
+        if(poseTopic){
+            poseTopic.unsubscribe(function(){
+                console.log('poseTopic is unsubscribed...')
+            });
+        }
+
         var connectBtn = document.getElementById('connect');
         connectBtn.className = 'btn btn-warning';
     }

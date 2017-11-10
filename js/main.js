@@ -47,9 +47,11 @@ function createWebSocket(){
 
         registerPoseTopic();
         initPinValue();
+
+        $('#status').bootstrapToggle('enable')
     });
 
-// This function is called when there is an error attempting to connect to rosbridge
+    // This function is called when there is an error attempting to connect to rosbridge
     rbServer.on('error', function(error) {
         // Write appropriate message to #feedback div upon error when attempting to connect to rosbridge
         var fbDiv = document.getElementById('feedback');
@@ -95,14 +97,12 @@ function setMovementButtonDisabled(flag){
 }
 
 function disconnect(){
-    if(rbServer){
-        if(poseTopic){
-            poseTopic.unsubscribe(function(){
-                console.log('poseTopic is unsubscribed...')
-            });
-        }
-        rbServer.close();
+    if(poseTopic){
+        poseTopic.unsubscribe(function(){
+            console.log('poseTopic is unsubscribed...')
+        });
     }
+    rbServer.close();
 }
 
 function movementHandler(direction)
@@ -160,11 +160,6 @@ function registerPoseTopic(){
 }
 
 function writeDigit2Pin(pin, value){
-
-    if(!rbServer){
-        console.log('No robot connected!')
-        return;
-    }
 
     var digitWriteClient = new ROSLIB.Service({
         ros : rbServer,
@@ -232,6 +227,7 @@ function initUIComponents(){
     });
 
     $('#status').bootstrapToggle();
+    $('#status').bootstrapToggle('disable');
 
     $('#status').change(function(event) {
         var value = $(this).prop('checked');// true | false

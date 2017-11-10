@@ -85,6 +85,11 @@ function disconnect(){
 
 function movementHandler(direction)
 {
+    if(!rbServer || !cmdVelTopic){
+        console.log('No robot connected!')
+        return;
+    }
+
     /**
      Set the appropriate values on the twist message object according to values in text boxes
      It seems that turtlesim only uses the x property of the linear object
@@ -186,7 +191,6 @@ function initUIComponents(){
     $('button.direction').click(function(e){
         var jqBtnObj = $(this);
         var direction = jqBtnObj.attr('name');
-        console.log(direction);
         movementHandler(direction)
     });
 

@@ -76,6 +76,8 @@ function createWebSocket(){
         $('#connect').prop('disabled', false);
         //disable the disconnect button
         $('#disconnect').prop('disabled', true);
+
+        $('#status').bootstrapToggle('disable');
     });
 
 // These lines create a topic object as defined by roslibjs
@@ -212,10 +214,10 @@ function initUIComponents(){
     });
 
     $(".nav-tabs a").click(function(){
-        console.dir(this);
+
         $(this).tab('show');
         var id = $(this).attr('href').substr(1);
-        console.log(id);
+
     });
 
     $("#connect").click(function(e){

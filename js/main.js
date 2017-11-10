@@ -144,6 +144,11 @@ function registerPoseTopic(){
 
 function writeDigit2Pin(pin, value){
 
+    if(!rbServer){
+        console.log('No robot connected!')
+        return;
+    }
+
     var digitWriteClient = new ROSLIB.Service({
         ros : rbServer,
         name : '/arduino/digital_write',

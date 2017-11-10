@@ -21,10 +21,6 @@ var twist = new ROSLIB.Message({
 });
 
 function createWebSocket(){
-    //if there exists one socket connection open
-    if(rbServer!== null){
-        rbServer.close();
-    }
 
     var ip = document.getElementById('wsip').value;
     var port = document.getElementById('portnum').value;
@@ -41,6 +37,16 @@ function createWebSocket(){
 
         var connectBtn = document.getElementById('connect');
         connectBtn.className = 'btn btn-success';
+
+        //enable the movement control buttons
+        setMovementButtonDisabled(false);
+        //disable the connect button
+        $('#connect').prop('disabled', true);
+        //enable the disconnect button
+        $('#disconnect').prop('disabled', false);
+
+        registerPoseTopic();
+        initPinValue();
     });
 
 // This function is called when there is an error attempting to connect to rosbridge
@@ -52,11 +58,22 @@ function createWebSocket(){
         connectBtn.className = 'btn btn-warning';
     });
 
-// This function is called when the connection to rosbridge is closed
+    // This function is called when the connection to rosbridge is closed
     rbServer.on('close', function() {
         // Write appropriate message to #feedback div upon closing connection to rosbridge
         var fbDiv = document.getElementById('feedback');
         fbDiv.innerHTML = "<p>Connection to websocket server closed.</p>";
+        var connectBtn = document.getElementById('connect');
+        connectBtn.className = 'btn btn-warning';
+
+        //enable the disconnect button
+        $('#disconnect').prop('disabled', true);
+        //disable the movement control buttons
+        setMovementButtonDisabled(true);
+        //enable the connect button
+        $('#connect').prop('disabled', false);
+        //disable the disconnect button
+        $('#disconnect').prop('disabled', true);
     });
 
 // These lines create a topic object as defined by roslibjs
@@ -68,28 +85,28 @@ function createWebSocket(){
 
 }
 
+function setMovementButtonDisabled(flag){
+
+    $('#left').prop('disabled',flag);
+    $('#right').prop('disabled',flag);
+    $('#forward').prop('disabled',flag);
+    $('#back').prop('disabled',flag);
+
+}
+
 function disconnect(){
     if(rbServer){
-        rbServer.close();
-
         if(poseTopic){
             poseTopic.unsubscribe(function(){
                 console.log('poseTopic is unsubscribed...')
             });
         }
-
-        var connectBtn = document.getElementById('connect');
-        connectBtn.className = 'btn btn-warning';
+        rbServer.close();
     }
 }
 
 function movementHandler(direction)
 {
-    if(!rbServer || !cmdVelTopic){
-        console.log('No robot connected!')
-        return;
-    }
-
     /**
      Set the appropriate values on the twist message object according to values in text boxes
      It seems that turtlesim only uses the x property of the linear object
@@ -196,7 +213,7 @@ function initUIComponents(){
     $('button.direction').click(function(e){
         var jqBtnObj = $(this);
         var direction = jqBtnObj.attr('name');
-        movementHandler(direction)
+        movementHandler(direction);
     });
 
     $(".nav-tabs a").click(function(){
@@ -208,9 +225,6 @@ function initUIComponents(){
 
     $("#connect").click(function(e){
         createWebSocket();
-        // loadRosTopicItems();
-        registerPoseTopic();
-        initPinValue();
     });
 
     $('#disconnect').click(function(){

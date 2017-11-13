@@ -46,7 +46,7 @@ function createWebSocket(){
         $('#disconnect').prop('disabled', false);
 
         registerPoseTopic();
-        initPinValue();
+        // initPinValue();
 
         $('#status').bootstrapToggle('enable')
     });
@@ -216,11 +216,10 @@ function setPinValues(){
     var data = [];
     $.each(pinNumObjArr, function(index ,item){
         var pin = $(item).val();
+        pin = parseInt(pin);
         var status = $(statusObjArr[index]).prop('checked');
 
-        if(typeof(pin)==='number' && typeof(status)==='boolean'){
-            sendCmd2ArduinoBoard(pin, status);
-        }
+        sendCmd2ArduinoBoard(pin, status);
     });
 }
 
@@ -250,14 +249,14 @@ function initUIComponents(){
     $('#status').bootstrapToggle();
     $('#status').bootstrapToggle('disable');
 
-    $('#status').change(function(event) {
-        var value = $(this).prop('checked');// true | false
-        console.log(value);
-
-        var pin = $('#pinnum').val();
-        sendCmd2ArduinoBoard(parseInt(pin), value);
-        queryStatusOfPin(parseInt(pin));
-    });
+    // $('#status').change(function(event) {
+    //     var value = $(this).prop('checked');// true | false
+    //     console.log(value);
+    //
+    //     var pin = $('#pinnum').val();
+    //     sendCmd2ArduinoBoard(parseInt(pin), value);
+    //     queryStatusOfPin(parseInt(pin));
+    // });
 
     //init form validation
     $('form[name=setPinForm]').bootstrapValidator({

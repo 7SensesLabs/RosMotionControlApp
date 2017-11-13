@@ -91,10 +91,7 @@ function createWebSocket(){
 
 function setMovementButtonDisabled(flag){
 
-    $('#left').prop('disabled',flag);
-    $('#right').prop('disabled',flag);
-    $('#forward').prop('disabled',flag);
-    $('#back').prop('disabled',flag);
+    $('button.btn.btn-primary.direction').prop('disabled',flag);
 
 }
 
@@ -161,7 +158,7 @@ function registerPoseTopic(){
     })
 }
 
-function writeDigit2Pin(pin, value){
+function sendCmd2ArduinoBoard(pin, value){
 
     var digitWriteClient = new ROSLIB.Service({
         ros : rbServer,
@@ -175,9 +172,13 @@ function writeDigit2Pin(pin, value){
     });
 
     digitWriteClient.callService(request2, function(result) {
-        console.log('Result for service call on '
+        console.log('Successful result for service call on '
             + digitWriteClient.name + ':');
         console.dir(result);
+    }, function(errorMsg){
+        console.log('Failed result for service call on '
+            + digitWriteClient.name + ':');
+        console.dir(errorMsg);
     });
 }
 
@@ -205,9 +206,27 @@ function queryStatusOfPin(pin){
     });
 }
 
+/*
+* change value of pin on arduino board
+* */
+function setPinValues(){
+    var pinNumObjArr = $('#service').find('input[name=pinnum]');
+    var statusObjArr = $('#service').find('input[name=status]');
+
+    var data = [];
+    $.each(pinNumObjArr, function(index ,item){
+        var pin = $(item).val();
+        var status = $(statusObjArr[index]).prop('checked');
+
+        if(typeof(pin)==='number' && typeof(status)==='boolean'){
+            sendCmd2ArduinoBoard(pin, status);
+        }
+    });
+}
+
 function initUIComponents(){
 
-    $('button.direction').click(function(e){
+    $('button.btn.btn-primary.direction').click(function(e){
         var jqBtnObj = $(this);
         var direction = jqBtnObj.attr('name');
         movementHandler(direction);
@@ -236,8 +255,51 @@ function initUIComponents(){
         console.log(value);
 
         var pin = $('#pinnum').val();
-        writeDigit2Pin(parseInt(pin), value);
+        sendCmd2ArduinoBoard(parseInt(pin), value);
         queryStatusOfPin(parseInt(pin));
+    });
+
+    //init form validation
+    $('form[name=setPinForm]').bootstrapValidator({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                pinnum: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The Pin Number is required'
+                        },
+                        integer: {
+                            message: 'The value is not an integer'
+                        }
+                    }
+                }
+            },
+            //If the validation is Successful
+            onSuccess: function(e, data) {
+                if(!rbServer){
+                    alert('Sorry, no web socket connection found!');
+                    return;
+                }
+                //We will send latest pin value configuration to ROS-controlled Arduino bord
+                setPinValues();
+            }
+        });
+
+    $('a[title="Remove Row"]').click(function (e) {
+        e.preventDefault();
+
+        if($('form[name=setPinForm]').find('div.form-group').length == 1){
+            alert('You cannot delete the last item!');
+            return;
+        }
+
+        var jqThis = $(this);
+        jqThis.parent().remove();
     });
 }
 
